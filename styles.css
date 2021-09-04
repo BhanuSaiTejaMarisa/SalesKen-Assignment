@@ -1,7 +1,7 @@
 /* body{
     background: aqua;
 } */
-#container , #play{
+#container ,#play{
     
     width:75%;
     margin:auto;
@@ -10,8 +10,8 @@
 #container{
     display: flex;
     height: 30vh;
-    border: 1px solid black;
     background: rgb(57, 175, 175);
+    border: 1px solid black;
 }
 #container>div{
     border: 1px solid black;
@@ -23,7 +23,12 @@
     transform: rotate(180deg);
     transform: scaleY(-1);
 }
-button{
-    width:70px;
+#play>div{
     margin:auto;
+    padding: 10px;
+    /* border: 2px solid sienna; */
+    width: 71px;
+}
+button{
+    width:70px; 
 }
