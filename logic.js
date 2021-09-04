@@ -64,15 +64,30 @@ start.addEventListener("click",()=>{
     Start()
 })
 
+
+
+
+
+
+
+
+//CANVAS
+
 var canvas=document.querySelector("canvas");
-canvas.width=800;
-canvas.height=300;
+canvas.width=770;
+canvas.height=200;
 var context=canvas.getContext('2d')
-console.log(context);
+//console.log(context);
+
 var x=10,y=100;
 var width=10,height=50
 var rect=[];
 var offset=5;
+var move=0;
+
+
+var stack=[]
+//Constructor
 function Rectangle(x,y,width,height){
     this.x=x;
     this.y=y;
@@ -93,17 +108,32 @@ function Rectangle(x,y,width,height){
     this.reset=()=>{
         context.fillStyle="yellow"
         context.fillRect(this.x,this.y,this.width,this.height);
+      //  move=0;
+    }
+    this.boundary=(X,Y,i)=>{
+        this.reset()
+        if(this.x+7.5<=X){
+            // console.log(true,this.x,X,this.y,Y);
+            // console.log(i);
+            stack.push(i)
+            context.fillStyle="red"
+            context.fillRect(this.x,this.y,this.width,this.height);
+            //console.log(i);
+            move=i;
+        }  
     }
 }
 
+//Creation
 for(let i=1;i<=50;i++){
-    //rect[i-1]=
-    //context.fillStyle=`rgb(${Math.floor(255*Math.random())},${Math.floor(255*Math.random())},${Math.floor(255*Math.random())})`
+  
     rect[i-1]=new Rectangle(x+offset,y-Math.floor(50*Math.random()),width,height+Math.floor(50*Math.random()))
     rect[i-1].create()
     offset+=15
 }
-var move=0;
+
+
+//Animation
 var canvasTimer
 function animate(){
     //requestAnimationFrame(animate);
@@ -131,7 +161,6 @@ function animate(){
    
 }
 
-//animate()
 //console.log(rect);
 var canvasButton=document.createElement("button");
 canvasButton.textContent="play"
@@ -140,26 +169,25 @@ canvasButton.addEventListener("click",()=>{
     animate()
 })
 
+
+//Reset after playing full animation
 function reset(){
     for(let i=0;i<50;i++){
         rect[i].reset()
     }
 }
+
+
 canvas.addEventListener("click",(e)=>{
-    console.log("click",e.target,e.clientX,e.clientY);
+    
+        console.log("inside");
+        barClick(e.clientX,e.clientY)
+    
 })
-//doesn't work
-// rect[0].addEventListener("click",()=>{
-//     console.log(0);
-// })
 
-
-// console.log(context);
-// console.log(canvas);
-
-//dummy=context.fillRect(0,0,100,200);
-
-// context.beginPath()
-// context.stroke()
-
-// context.fill()
+function barClick(X,Y){
+    for(let i=0;i<50;i++){
+        rect[i].boundary(X,Y,i);
+    }
+    console.log(move);
+}
