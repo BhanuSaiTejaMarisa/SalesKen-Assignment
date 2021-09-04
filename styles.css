@@ -1,0 +1,29 @@
+/* body{
+    background: aqua;
+} */
+#container , #play{
+    
+    width:75%;
+    margin:auto;
+    
+}
+#container{
+    display: flex;
+    height: 30vh;
+    border: 1px solid black;
+    background: rgb(57, 175, 175);
+}
+#container>div{
+    border: 1px solid black;
+    width:8%;
+    margin: 1%;
+    margin-top: 10px;
+}
+#container {
+    transform: rotate(180deg);
+    transform: scaleY(-1);
+}
+button{
+    width:70px;
+    margin:auto;
+}
