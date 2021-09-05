@@ -146,8 +146,7 @@ for(let i=1;i<=50;i++){
 //Animation
 var canvasTimer
 function animate(){
-    //requestAnimationFrame(animate);
-    //console.log("f");
+
     if(canvasButton.textContent=="play"){
         canvasButton.textContent="pause"
         canvasTimer= setInterval(()=>{
@@ -266,10 +265,11 @@ var streamPointer=(e)=>{
 
     tags()
 }
-
+//Tags
 function tags(){
-    context.strokeStyle="orange";
+
     context.beginPath()
+    context.strokeStyle="orange";
     context.moveTo(20,rect[0].y);
     context.lineTo(20,35);
     context.stroke();
@@ -280,6 +280,7 @@ function tags(){
     context.fillText("Introduction",20, 35);
    // context.fill()
 
+    context.beginPath()
     context.strokeStyle="blue";
     context.moveTo(362,rect[23].y);
     context.lineTo(362,35);
@@ -290,6 +291,7 @@ function tags(){
     context.fillText(" why x=y?",362, 35);
     context.stroke()
 
+    context.beginPath()
     context.strokeStyle="teal";
     context.moveTo(750,rect[49].y);
     context.lineTo(750,35);
