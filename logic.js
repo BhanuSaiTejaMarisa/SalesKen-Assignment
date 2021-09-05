@@ -74,7 +74,7 @@ start.addEventListener("click",()=>{
 //CANVAS
 
 var canvas=document.querySelector("canvas");
-canvas.width=770;
+canvas.width=780;
 canvas.height=200;
 var context=canvas.getContext('2d')
 //console.log(context);
@@ -83,7 +83,7 @@ var x=10,y=100;
 var width=10,height=50
 var rect=[];
 var offset=5;
-var move=0;
+var pointer=0;
 
 
 var stack=[]
@@ -108,7 +108,7 @@ function Rectangle(x,y,width,height){
     this.reset=()=>{
         context.fillStyle="yellow"
         context.fillRect(this.x,this.y,this.width,this.height);
-      //  move=0;
+      //  pointer=0;
     }
     this.boundary=(X,Y,i)=>{
         this.reset()
@@ -119,7 +119,7 @@ function Rectangle(x,y,width,height){
             context.fillStyle="red"
             context.fillRect(this.x,this.y,this.width,this.height);
             //console.log(i);
-            move=i;
+            pointer=i;
         }  
     }
 }
@@ -141,15 +141,15 @@ function animate(){
     if(canvasButton.textContent=="play"){
         canvasButton.textContent="pause"
         canvasTimer= setInterval(()=>{
-        rect[move].style()
-        move++;
-        if(move==50){
-            move=0;
+        rect[pointer].style()
+        pointer++;
+        if(pointer==50){
+            pointer=0;
             canvasButton.textContent="play";
             clearInterval(canvasTimer);
             reset()
         }
-        console.log(move);
+        //console.log(pointer);
     },500)
     
     }
@@ -180,14 +180,112 @@ function reset(){
 
 canvas.addEventListener("click",(e)=>{
     
-        console.log("inside");
+        //console.log("click fn");
         barClick(e.clientX,e.clientY)
-    
+        flagDoubleClick=0;
+        canvas.removeEventListener("mousemove",streamPointer)
 })
 
 function barClick(X,Y){
     for(let i=0;i<50;i++){
         rect[i].boundary(X,Y,i);
     }
-    console.log(move);
+    //console.log(pointer);
 }
+var lineStack=[]
+context.strokeStyle="purple";
+context.strokeRect(0,0,20,20)
+context.moveTo(5,4)
+context.lineTo(5,14)
+context.lineTo(14,4);
+context.lineTo(5,4);
+context.stroke();
+context.moveTo(9,11)
+context.lineTo(14,15);
+context.lineTo(16,12);
+context.lineTo(11,8);
+context.stroke();
+
+var flagDoubleClick=0
+canvas.addEventListener("dblclick",(e)=>{
+    //console.log("dblcick",flagDoubleClick);
+    if(e.x<28&&e.y<260&&flagDoubleClick==0){
+
+        canvas.addEventListener("mousemove",streamPointer)
+        flagDoubleClick=1
+
+    }
+    else{
+        flagDoubleClick=0;
+        canvas.removeEventListener("mousemove",streamPointer)
+    }
+    //console.log("dblcick",flagDoubleClick);
+
+})
+
+
+// pointer for streaming
+var streamPointer=(e)=>{
+    if(lineStack.length!=0){
+        for(let j=0;j<lineStack.length-1;j++){
+            var prevlineX=lineStack[j]
+            lineStack.shift()
+            context.clearRect(prevlineX,0,2,200);
+        }
+        // context.strokeStyle="black";
+        // context.moveTo(e.x-8,0);
+        // context.lineTo(e.x-8,200);
+        // context.stroke();
+
+       
+    }
+    for(let i=0;i<50;i++){
+        rect[i].create()
+    }
+    //console.log(e.x,e.y);
+    if(e.x>30){
+        context.fillStyle="green";
+        context.fillRect(e.x-8,0,2, 200);
+        lineStack.push(e.x-8);
+        barClick(e.clientX,e.clientY)
+    }
+tags()
+  
+    // context.lineTo(e.x-8,200);
+    // context.();
+    //console.log("hover");
+    //console.log(lineStack);
+}
+
+function tags(){
+    context.strokeStyle="orange";
+    context.moveTo(20,rect[0].y);
+    context.lineTo(20,35);
+    context.strokeRect(20,20,90,20)
+    // console.log(rect[0]);
+    context.fillStyle="orange"
+    context.font="15px Georgia"
+    context.fillText("Introduction",20, 35);
+    context.stroke();
+
+    context.strokeStyle="blue";
+    context.moveTo(362,rect[23].y);
+    context.lineTo(362,35);
+    context.strokeRect(362,20,70,20)
+    // console.log(rect[0]);
+    context.fillStyle="blue"
+    context.font="15px Georgia"
+    context.fillText(" why x=y?",362, 35);
+    context.stroke()
+
+    context.strokeStyle="teal";
+    context.moveTo(750,rect[49].y);
+    context.lineTo(750,35);
+    context.strokeRect(660,20,90,20)
+    // console.log(rect[0]);
+    context.fillStyle="blue"
+    context.font="15px Georgia"
+    context.fillText(" Conclusion",660, 35);
+    context.stroke()
+}
+tags()
