@@ -268,38 +268,27 @@ var streamPointer=(e)=>{
 //Tags
 function tags(){
 
-    context.beginPath()
-    context.strokeStyle="orange";
-    context.moveTo(20,rect[0].y);
-    context.lineTo(20,35);
-    context.stroke();
-    context.strokeRect(20,20,90,20)
-    // console.log(rect[0]);
-    context.fillStyle="orange"
-    context.font="15px Georgia"
-    context.fillText("Introduction",20, 35);
-   // context.fill()
-
-    context.beginPath()
-    context.strokeStyle="blue";
-    context.moveTo(362,rect[23].y);
-    context.lineTo(362,35);
-    context.strokeRect(362,20,70,20)
-    // console.log(rect[0]);
-    context.fillStyle="blue"
-    context.font="15px Georgia"
-    context.fillText(" why x=y?",362, 35);
-    context.stroke()
-
-    context.beginPath()
-    context.strokeStyle="teal";
-    context.moveTo(750,rect[49].y);
-    context.lineTo(750,35);
-    context.strokeRect(660,20,90,20)
-    // console.log(rect[0]);
-    context.fillStyle="teal"
-    context.font="15px Georgia"
-    context.fillText(" Conclusion",660, 35);
-    context.stroke()
+    createTags(rect[0].x+5,rect[0].y,35,90,20," Introduction","orange",rect[0].x+5)
+    createTags(rect[23].x+5,rect[23].y,35,70,20," one_six","seagreen",rect[23].x+5)
+    createTags(rect[49].x+5,rect[49].y,35,170,20," Rapport Building-Energy","purple",rect[49].x+5-170)
+   
 }
 tags()
+
+//Tags creator
+function createTags(x,y,y1,c,d,text,color,x1){
+
+    context.beginPath()
+    context.strokeStyle=color;
+    context.moveTo(x,y);
+    context.lineTo(x,y1);
+    context.stroke();
+    context.strokeRect(x1,d,c,d)
+    context.fillStyle=color
+    context.font="15px Georgia"
+    context.fillText(text,x1, y1);
+    context.beginPath()
+    context.arc(x,y,3,0,Math.PI*2,false)
+    context.fill()
+}
+
